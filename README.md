@@ -12,7 +12,7 @@ How to use
 ----------
 
 
-== Example == 
+## Example
 
     window.addEvent('domready', function() {
         
