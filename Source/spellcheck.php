@@ -1,11 +1,11 @@
 <?php
+
 header("Content-Type: text/xml; charset=utf-8");
-$url="https://www.google.com/tbproxy/spell?lang=" . $_GET['lang'];
-$text = urldecode($_GET['text']);
+$url="https://www.google.com/tbproxy/spell?lang=".$_GET['lang'];
 
 $body = '<?xml version="1.0" encoding="utf-8" ?>';
-$body .= '<spellrequest textalreadyclipped="0" ignoredups="1" ignoredigits="' . $_GET['ignoredigits'] . '" ignoreallcaps="' . $_GET['ignorecaps'] . '">';
-$body .= '<text>' . $text . '</text>';
+$body .= '<spellrequest textalreadyclipped="0" ignoredups="1" ignoredigits="'.(int) $_GET['ignoredigits'].'" ignoreallcaps="'.(int)$_GET['ignorecaps'].'">';
+$body .= '<text>'.urldecode($_GET['text']).'</text>';
 $body .= '</spellrequest>';
 
 $ch = curl_init();
@@ -17,5 +17,5 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $contents = curl_exec($ch);
 curl_close($ch);
 
-print $contents;
-?>
+echo $contents;
+
