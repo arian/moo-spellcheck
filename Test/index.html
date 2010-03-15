@@ -6,7 +6,6 @@
 		<title>test</title>
 		<script src="mootools-1.2.4-core.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../Source/Request.SpellCheck.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../Source/SpellCheck.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 			
 			window.addEvent('domready', function() {
@@ -17,10 +16,10 @@
 
 				var spell = new Request.SpellCheck({
 					url: '../Source/spellcheck.php',
-					onSuccess: function(data,response,text){
+					onSuccess: function(suggestions,data,response,text){
 						
 						result.empty();
-						$each(SpellCheck.getSuggestions(text,data),function(sug){
+						$each(suggestions,function(sug){
 							
 							new Element('span',{
 								'class': sug.valid ? '' : 'error',

@@ -27,9 +27,29 @@ Request.SpellCheck = new Class({
 		});
 	},
 
+	getSuggestions: function(text,spellCheckRes){
+		var data = [];
+		var i = 0;
+		$each(spellCheckRes,function(row){
+			data.push({
+				text: text.substr(i,row.o-i),
+				suggestions: [],
+				valid: true
+			});
+			data.push({
+				text: text.substr(row.o,row.l),
+				suggestions: row.a,
+				valid: false
+			});
+			i = row.o+row.l;
+		});
+		return data;
+	},
+
 	success: function(text){
 		this.response.json = JSON.decode(text, this.options.secure);
-		this.onSuccess(this.response.json, text,this.text);
+		this.response.suggestions = this.getSuggestions(this.text,this.response.json);
+		this.onSuccess(this.response.suggestions, this.response.json, text,this.text);
 	}	
 });
 
