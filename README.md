@@ -11,6 +11,9 @@ Request.SpellCheck will give you an array in the onSuccess event that you can us
 How to use
 ----------
 
+
+== Example == 
+
     window.addEvent('domready', function() {
         
 		var result = document.id('result');
@@ -41,3 +44,37 @@ How to use
 		spell.checkspell('Testng ths spelcheckr out.');
 
     });
+
+    
+## Class: Request.SpellCheck
+
+This class extends Request.JSON, so you can use all Request.JSON stuff you already know.
+
+### Options 
+- lang: (*string*: default en) The language Code
+- ignoredigits: (*boolean*: default false) true to ignore digits, false to check them
+- ignoreallcaps: (*boolean*: default false) true to ignore words with all caps, false to check them
+
+
+### Events
+
+All the events you know from Request.JSON
+
+#### success
+
+Fired when the request completes. This overrides the signature of the Request.JSON success event.
+
+#### Signature:
+
+	#JS
+	onSuccess(suggestions, responseJSON, responseText, text)
+
+#### Arguments:
+- suggestions - (*array*) An array with the data 
+	- text - (*string*) The text 
+	- valid - (*boolean*) Is this little text valid or not
+	- suggestions - (*array*) An array with suggestions
+- responseJSON - (*object*) The JSON response object from the remote request.
+- responseText - (*string*) The JSON response as string.
+- text - (*string*) The original input text
+
