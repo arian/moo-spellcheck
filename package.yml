@@ -1,0 +1,7 @@
+name: Request.SpellCheck
+author: astolwijk
+current: 0.1
+category: Request
+tags: [spell, check, checker, spellcheck, spellchecker]
+demo: http://www.aryweb.nl/projects/spellcheck/
+docs: http://github.com/arian/moo-spellcheck/blob/master/README.md

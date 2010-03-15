@@ -1,20 +1,43 @@
-# jQuery Spellcheck Plugin
+SpellChecker
+============
 
-A jQuery plugin that adds spellcheck support to inputs. It uses Google's spell checking API and requires a server to handle the communication with the API. An example php implementation is provided.
+This class allows you to provide spell checking for text. It uses Google to check if the text is correct
+and to get some suggestions. This is done by a PHP script that uses cURL to get some xml and translates it 
+to JSON, so we can use Request.JSON for our client-side. That is where Request.SpellCheck is build on.
+Request.SpellCheck will give you an array in the onSuccess event that you can use. (for mark-up things)
 
-It has several configurable options.
- 
-* `lang`: the 2 letter language code, defaults to en for english
-* `events`: a space separated string of events to use, default is 'keypress blur paste'
-* `autocheck`: number of milliseconds to check spelling after a key event, default is 750.
-* `url`: url of the spellcheck service on your server, default is spellcheck.php
-* `ignorecaps`: 1 to ignore words with all caps, 0 to check them
-* `ignoredigits`: 1 to ignore digits, 0 to check them
+![Screenshot](http://github.com/arian/moo-spellcheck/raw/master/screenshot.png)
 
-If there are spelling errors it outputs them to a div with the ID "spellcheckresults" appended to the body and positioned directly under the input. Within this div it creates a definition list (&lt;dl&gt;) with the misspelled word as the title (&lt;dt&gt;) and each suggestion as the definition (&lt;dd&gt;).
+How to use
+----------
 
-## License
+    window.addEvent('domready', function() {
+        
+		var result = document.id('result');
 
-The spellcheck plugin is licensed under the MIT License (LICENSE.txt).
+		var spell = new Request.SpellCheck({
+			url: '../Source/spellcheck.php',
+			onSuccess: function(suggestions,data,response,text){
+				
+				result.empty();
+				$each(suggestions,function(sug){
+					
+					new Element('span',{
+						'class': sug.valid ? '' : 'error',
+						text: sug.text
+					}).inject(result);
+					
+					if(!sug.valid){
+						new Element('span',{
+							'class': 'suggestions',
+							text: '('+sug.suggestions.join(', ')+')'
+						}).inject(result);
+					}
+					
+				});
+			}
+		});
+		
+		spell.checkspell('Testng ths spelcheckr out.');
 
-Copyright (c) 2010 [Brandon Aaron](http://brandonaaron.net)
+    });
