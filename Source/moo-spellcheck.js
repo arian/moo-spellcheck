@@ -1,7 +1,7 @@
 
 Request.SpellCheck = new Class({
 	
-	Extends: Request,
+	Extends: Request.JSON,
 		
 	options: {
 		// Request
@@ -25,8 +25,9 @@ Request.SpellCheck = new Class({
 		});
 	},
 
-	success: function(text){ 
-		this.onSuccess(text);
+	success: function(text){
+		this.response.json = JSON.decode(text, this.options.secure);
+		this.onSuccess(this.response.json, text);
 	}	
 });
 

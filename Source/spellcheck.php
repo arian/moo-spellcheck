@@ -1,6 +1,6 @@
 <?php
 
-header("Content-Type: text/xml; charset=utf-8");
+header("Content-Type: application/json; charset=utf-8");
 $url="https://www.google.com/tbproxy/spell?lang=".$_GET['lang'];
 
 $body = '<?xml version="1.0" encoding="utf-8" ?>';
@@ -17,5 +17,16 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $contents = curl_exec($ch);
 curl_close($ch);
 
-echo $contents;
+$data = array();
+$sxe = new SimpleXMLElement($contents);
+
+foreach($sxe->c as $res){
+	$data[] = array(
+		'o' => $res['o'],
+		'l' => $res['l'],
+		's' => $res['s'],
+	);
+}
+
+echo json_encode($data);
 
