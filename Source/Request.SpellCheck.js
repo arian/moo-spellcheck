@@ -61,6 +61,11 @@ Request.SpellCheck = new Class({
 			});
 			i = row.o+row.l;
 		});
+		data.push({
+			text: text.substr(i),
+			suggestions: [],
+			valid: true			
+		});
 		return data;
 	},
 
