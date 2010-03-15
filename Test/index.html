@@ -4,19 +4,23 @@
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<title>test</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="jquery.spellcheck.js" type="text/javascript" charset="utf-8"></script>
+		<script src="mootools-1.2.4-core.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../Source/moo-spellcheck.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
-			jQuery(document).ready(function($) {
-				$('#test1').spellcheck({ events: null });
-				$('#test2, #test3').spellcheck();
-				$('#test4').spellcheck({ events: 'keyup' });
-				$('a.checkspelling').bind('click', function(event) {
-					$(this.hash).checkspelling();
-					this.blur();
-					return false;
+			
+			window.addEvent('domready',function(){
+				
+				var spell = new Request.SpellCheck({
+					onSuccess: function(text){
+						console.log(text);
+					}
 				});
+				
+				console.log(spell.check('hi how ar you dong?'));
+				
 			});
+
+
 		</script>
 		<style type="text/css" media="screen">
 			body { font-size: small; font-family:"lucida Grande", "lucida sans unicode", "myriad pro", arial, helvetica, sans-serif; }
@@ -41,7 +45,6 @@
 					<label for="test3">Test: </label><input type="password" name="test3" id="test3"><br>
 					<label for="test4">Test: </label><br>
 					<textarea name="test4" id="test4"></textarea>
-				</legend>
 			</fieldset>
 		</form>
 	</body>
