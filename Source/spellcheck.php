@@ -22,9 +22,9 @@ $sxe = new SimpleXMLElement($contents);
 
 foreach($sxe->c as $res){
 	$data[] = array(
-		'o' => $res['o'],
-		'l' => $res['l'],
-		's' => $res['s'],
+		'o' => (int) $res['o'],
+		'l' => (int) $res['l'],
+		's' => (int) $res['s'],
 	);
 }
 
