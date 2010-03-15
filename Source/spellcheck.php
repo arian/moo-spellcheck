@@ -25,6 +25,7 @@ foreach($sxe->c as $res){
 		'o' => (int) $res['o'],
 		'l' => (int) $res['l'],
 		's' => (int) $res['s'],
+		'a' => explode("\t",$res),
 	);
 }
 

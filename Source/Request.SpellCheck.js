@@ -1,4 +1,5 @@
 
+
 Request.SpellCheck = new Class({
 	
 	Extends: Request.JSON,
@@ -15,6 +16,7 @@ Request.SpellCheck = new Class({
 	},
 	
 	spellcheck: function(text){
+		this.text = text;
 		this.send({
 			data: {
 				lang: this.options.lang,
@@ -27,7 +29,7 @@ Request.SpellCheck = new Class({
 
 	success: function(text){
 		this.response.json = JSON.decode(text, this.options.secure);
-		this.onSuccess(this.response.json, text);
+		this.onSuccess(this.response.json, text,this.text);
 	}	
 });
 

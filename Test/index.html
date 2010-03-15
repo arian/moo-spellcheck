@@ -5,45 +5,70 @@
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<title>test</title>
 		<script src="mootools-1.2.4-core.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../Source/moo-spellcheck.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../Source/Request.SpellCheck.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../Source/SpellCheck.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 			
 			window.addEvent('domready', function() {
+
+				var val = document.id('test1');
+				var form = document.id('checkspelling');
+				var result = document.id('result');
+
 				var spell = new Request.SpellCheck({
 					url: '../Source/spellcheck.php',
-					onSuccess: function(text){
-						console.log(text);
+					onSuccess: function(data,response,text){
+						
+						result.empty();
+						$each(SpellCheck.getSuggestions(text,data),function(sug){
+							
+							new Element('span',{
+								'class': sug.valid ? '' : 'error',
+								text: sug.text
+							}).inject(result);
+							
+							if(!sug.valid){
+								new Element('span',{
+									'class': 'suggestions',
+									text: '('+sug.suggestions.join(', ')+')'
+								}).inject(result);
+							}
+							
+						});
 					}
 				});
-				console.log(spell.spellcheck('hi how ar you dong?'));
+				
+				form.addEvent('submit',function(e){
+					e.stop();
+					spell.spellcheck(val.get('value'));
+				});
 				
 			});
 
 
 		</script>
 		<style type="text/css" media="screen">
-			body { font-size: small; font-family:"lucida Grande", "lucida sans unicode", "myriad pro", arial, helvetica, sans-serif; }
-			input, textarea { width: 250px; }
-			textarea { height: 100px; }
-			#spellcheckresults { position: absolute; background: #fff; margin: 0; border: 1px solid #000; padding: 5px; }
-				#spellcheckresults dl { margin: 0; padding: 0; }
-					#spellcheckresults dl dt { float: left; clear: left; margin: 3px 0; padding: 0; font-weight: bold; }
-					#spellcheckresults dl dd { float: left; margin: 3px 10px; padding: 0; cursor: pointer; color: green; }
-					#spellcheckresults dl dd.ignore { color: red; font-style: italic; }
-			
+			body { font-size: small; font-family:"lucida Grande", "lucida sans unicode", "myriad pro", arial, helvetica, sans-serif; }			
 			a.checkspelling {  }
 				a.checkspelling img { margin: 0 5px; border: 0; }
+				
+			.error {
+				background: red;
+			}
+			
+			.suggestions {
+				font-size: 0.9em;
+				font-style: italic;
+			}
 		</style>
 	</head>
 	<body>
-		<form action="#" method="get">
+		<form action="#" method="get" id="checkspelling">
 			<fieldset>	
 				<legend>Testing Spellchecker</legend>
-					<label for="test1">Test: </label><input type="text" name="test1" id="test1" value="Testng ths spelcheckr out."><a href="#test1" class="checkspelling"><img src="spellcheck.png"></a><br>
-					<label for="test2">Test: </label><input type="text" name="test2" id="test2"><br>
-					<label for="test3">Test: </label><input type="password" name="test3" id="test3"><br>
-					<label for="test4">Test: </label><br>
-					<textarea name="test4" id="test4"></textarea>
+					<label for="test1">Test: </label><input type="text" name="test1" id="test1" value="Testng ths spelcheckr out.">
+					<input type="submit" value="Check Spelling">
+					<p id="result"></p>
 			</fieldset>
 		</form>
 	</body>
