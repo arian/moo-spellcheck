@@ -1,3 +1,21 @@
+/*
+---
+description: Request.SpellCheck is a class that can check a text for spelling using Google
+
+license: MIT-style
+
+authors:
+- Arian Stolwijk
+
+requires:
+requires: 
+  core/1.2.4: 
+  - Request.JSON
+
+provides: [Request.SpellCheck,Request.SpellCheck.spellcheck]
+
+...
+*/
 
 
 Request.SpellCheck = new Class({
@@ -50,6 +68,7 @@ Request.SpellCheck = new Class({
 		this.response.json = JSON.decode(text, this.options.secure);
 		this.response.suggestions = this.getSuggestions(this.text,this.response.json);
 		this.onSuccess(this.response.suggestions, this.response.json, text,this.text);
-	}	
+	}
+		
 });
 
