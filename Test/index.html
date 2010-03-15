@@ -8,15 +8,14 @@
 		<script src="../Source/moo-spellcheck.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 			
-			window.addEvent('domready',function(){
-				
+			window.addEvent('domready', function() {
 				var spell = new Request.SpellCheck({
+					url: '../Source/spellcheck.php',
 					onSuccess: function(text){
 						console.log(text);
 					}
 				});
-				
-				console.log(spell.check('hi how ar you dong?'));
+				console.log(spell.spellcheck('hi how ar you dong?'));
 				
 			});
 

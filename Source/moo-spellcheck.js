@@ -14,12 +14,14 @@ Request.SpellCheck = new Class({
 		ignoreallcaps: false
 	},
 	
-	check: function(text){
+	spellcheck: function(text){
 		this.send({
-			lang: this.options.lang,
-			ignoredigits: this.options.ignoredigits,
-			ignoreallcaps: this.options.ignoreallcaps,
-			text: text
+			data: {
+				lang: this.options.lang,
+				ignoredigits: this.options.ignoredigits,
+				ignoreallcaps: this.options.ignoreallcaps,
+				text: text
+			}
 		});
 	},
 
