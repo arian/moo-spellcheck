@@ -8,7 +8,7 @@ Request.SpellCheck will give you an array in the onSuccess event that you can us
 
 ![Screenshot](http://github.com/arian/moo-spellcheck/raw/master/screenshot.png)
 
-How to use
+How To Use
 ----------
 
 
