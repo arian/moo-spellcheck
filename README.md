@@ -8,42 +8,9 @@ Request.SpellCheck will give you an array in the onSuccess event that you can us
 
 ![Screenshot](http://github.com/arian/moo-spellcheck/raw/master/screenshot.png)
 
-How To Use
+How to use
 ----------
 
-
-## Example
-
-    window.addEvent('domready', function() {
-        
-		var result = document.id('result');
-
-		var spell = new Request.SpellCheck({
-			url: '../Source/spellcheck.php',
-			onSuccess: function(suggestions,data,response,text){
-				
-				result.empty();
-				$each(suggestions,function(sug){
-					
-					new Element('span',{
-						'class': sug.valid ? '' : 'error',
-						text: sug.text
-					}).inject(result);
-					
-					if(!sug.valid){
-						new Element('span',{
-							'class': 'suggestions',
-							text: '('+sug.suggestions.join(', ')+')'
-						}).inject(result);
-					}
-					
-				});
-			}
-		});
-		
-		spell.checkspell('Testng ths spelcheckr out.');
-
-    });
 
     
 ## Class: Request.SpellCheck
@@ -78,3 +45,37 @@ Fired when the request completes. This overrides the signature of the Request.JS
 - responseText - (*string*) The JSON response as string.
 - text - (*string*) The original input text
 
+
+## Example
+
+	#JS
+    window.addEvent('domready', function() {
+        
+		var result = document.id('result');
+
+		var spell = new Request.SpellCheck({
+			url: '../Source/spellcheck.php',
+			onSuccess: function(suggestions,data,response,text){
+				
+				result.empty();
+				$each(suggestions,function(sug){
+					
+					new Element('span',{
+						'class': sug.valid ? '' : 'error',
+						text: sug.text
+					}).inject(result);
+					
+					if(!sug.valid){
+						new Element('span',{
+							'class': 'suggestions',
+							text: '('+sug.suggestions.join(', ')+')'
+						}).inject(result);
+					}
+					
+				});
+			}
+		});
+		
+		spell.checkspell('Testng ths spelcheckr out.');
+
+    });
