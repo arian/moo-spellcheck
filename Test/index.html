@@ -1,74 +1,90 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-	"http://www.w3.org/TR/html4/strict.dtd">
-<html>
-	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>test</title>
-		<script src="mootools-1.2.4-core.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../Source/Request.SpellCheck.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" charset="utf-8">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Mootools Spellcheck</title>
+
+<link  href="style.css" rel="stylesheet" type="text/css" media="screen" />
+
+<script src="mootools-1.2.4-core.js" type="text/javascript"></script>
+<script src="../Source/Request.SpellCheck.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+	
+window.addEvent('domready', function() {
+
+	var val = document.id('test1');
+	var form = document.id('checkspelling');
+	var result = document.id('result');
+
+	var spell = new Request.SpellCheck({
+		url: '../Source/spellcheck.php',
+		onSuccess: function(suggestions,data,response,text){
 			
-			window.addEvent('domready', function() {
-
-				var val = document.id('test1');
-				var form = document.id('checkspelling');
-				var result = document.id('result');
-
-				var spell = new Request.SpellCheck({
-					url: '../Source/spellcheck.php',
-					onSuccess: function(suggestions,data,response,text){
-						
-						result.empty();
-						$each(suggestions,function(sug){
-							
-							new Element('span',{
-								'class': sug.valid ? '' : 'error',
-								text: sug.text
-							}).inject(result);
-							
-							if(!sug.valid){
-								new Element('span',{
-									'class': 'suggestions',
-									text: '('+sug.suggestions.join(', ')+')'
-								}).inject(result);
-							}
-							
-						});
-					}
-				});
+			result.empty();
+			$each(suggestions,function(sug){
 				
-				form.addEvent('submit',function(e){
-					e.stop();
-					spell.spellcheck(val.get('value'));
-				});
+				new Element('span',{
+					'class': sug.valid ? '' : 'error',
+					text: sug.text
+				}).inject(result);
+				
+				if(!sug.valid){
+					new Element('span',{
+						'class': 'suggestions',
+						text: '('+sug.suggestions.join(', ')+')'
+					}).inject(result);
+				}
 				
 			});
+		}
+	});
+	
+	form.addEvent('submit',function(e){
+		e.stop();
+		spell.spellcheck(val.get('value'));
+	});
+	
+});
+
+</script>
+
+<style type="text/css" media="screen">
+.error {
+	background: red;
+}
+
+.suggestions {
+	font-size: 0.9em;
+	font-style: italic;
+}
+</style>
 
 
-		</script>
-		<style type="text/css" media="screen">
-			body { font-size: small; font-family:"lucida Grande", "lucida sans unicode", "myriad pro", arial, helvetica, sans-serif; }			
-			a.checkspelling {  }
-				a.checkspelling img { margin: 0 5px; border: 0; }
-				
-			.error {
-				background: red;
-			}
-			
-			.suggestions {
-				font-size: 0.9em;
-				font-style: italic;
-			}
-		</style>
-	</head>
-	<body>
-		<form action="#" method="get" id="checkspelling">
-			<fieldset>	
-				<legend>Testing Spellchecker</legend>
-					<label for="test1">Test: </label><input type="text" name="test1" id="test1" value="Testng ths spelcheckr out.">
-					<input type="submit" value="Check Spelling">
-					<p id="result"></p>
-			</fieldset>
-		</form>
-	</body>
+</head>
+
+<body>
+
+<h1>Mootools Spellchecker</h1>
+
+<p>
+	This class allows you to provide spell checking for text. It uses Google to check if the text is correct and to 
+	get some suggestions. This is done by a PHP script that uses cURL to get some xml and translates it to JSON, so 
+	we can use Request.JSON for our client-side. That is where Request.SpellCheck is build on. Request.SpellCheck will 
+	give you an array in the onSuccess event that you can use. (for mark-up things)
+</p>
+
+
+<h2>Demo</h2>
+
+<form action="#" method="get" id="checkspelling">
+	<fieldset>	
+		<legend>Testing Spellchecker</legend>
+			<label for="test1">Test: </label><input type="text" name="test1" id="test1" value="Testng ths spelcheckr out.">
+			<input type="submit" value="Check Spelling">
+			<p id="result"></p>
+	</fieldset>
+</form>
+
+</body>
 </html>
