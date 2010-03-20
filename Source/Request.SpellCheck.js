@@ -45,6 +45,10 @@ Request.SpellCheck = new Class({
 		});
 	},
 
+	setLang: function(lang){
+		this.options.lang = lang;
+	},
+
 	getSuggestions: function(text,spellCheckRes){
 		var data = [];
 		var i = 0;
@@ -74,6 +78,6 @@ Request.SpellCheck = new Class({
 		this.response.suggestions = this.getSuggestions(this.text,this.response.json);
 		this.onSuccess(this.response.suggestions, this.response.json, text,this.text);
 	}
-		
+			
 });
 
