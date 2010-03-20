@@ -14,11 +14,19 @@ How to use
 var spell = new Request.SpellCheck([options]);
 
     
-## Class: Request.SpellCheck
+### Class: Request.SpellCheck
 
 This class extends Request.JSON, so you can use all Request.JSON stuff you already know.
 
+### Syntax
+
+	#JS
+	var spell = new Request.SpellCheck([options]);
+
 ### Options 
+
+All the options of Request.JSON
+
 - lang: (*string*: default en) The language Code
 - ignoredigits: (*boolean*: default false) true to ignore digits, false to check them
 - ignoreallcaps: (*boolean*: default false) true to ignore words with all caps, false to check them
@@ -45,6 +53,25 @@ Fired when the request completes. This overrides the signature of the Request.JS
 - responseJSON: (*object*) The JSON response object from the remote request.
 - responseText: (*string*) The JSON response as string.
 - text: (*string*) The original input text
+
+
+### Method: spellcheck
+
+This is the method you use this method to check a text.
+
+#### Syntax
+	
+	#JS
+	spell.checkspell('Testng ths spelcheckr out.');
+
+### Method: setLang
+
+You can use this method to set the language to another language.
+
+#### Syntax
+	
+	#JS
+	spell.setLang('nl');
 
 
 ## Example
